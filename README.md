@@ -478,6 +478,3 @@ Built using Go's standard library, particularly:
 - `sync` for concurrency primitives
 
 ---
-
-**Last Updated**: 2024
-A Load Balancer written in Go.
