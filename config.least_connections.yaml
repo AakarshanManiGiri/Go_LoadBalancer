@@ -1,0 +1,46 @@
+# Load Balancer Configuration - Least Connections Example
+# Use this configuration when backends handle long-lived connections
+# or have varying processing times.
+
+port: 8080
+algorithm: least_connections
+
+# Timeouts
+request_timeout: 60s
+idle_timeout: 120s
+max_idle_conns: 200
+
+# Backend servers with connection limits
+backends:
+  - id: db-conn-1
+    host: db-server-1.internal
+    port: 5432
+    weight: 1
+    max_conns: 50
+
+  - id: db-conn-2
+    host: db-server-2.internal
+    port: 5432
+    weight: 1
+    max_conns: 50
+
+  - id: db-conn-3
+    host: db-server-3.internal
+    port: 5432
+    weight: 1
+    max_conns: 50
+
+# Aggressive health checking for database connections
+health_check:
+  enabled: true
+  interval: 5s
+  timeout: 3s
+  unhealthy_threshold: 2
+  healthy_threshold: 1
+  path: /health
+  method: GET
+  expected_status: 200
+
+# No sticky sessions for connection pooling
+sticky_session:
+  enabled: false

@@ -1,0 +1,46 @@
+# Load Balancer Configuration - IP Hash Sticky Sessions Example
+# Use this for applications that don't accept cookies but need session affinity.
+# Clients from the same IP will always route to the same backend.
+
+port: 8080
+algorithm: round_robin
+
+request_timeout: 30s
+idle_timeout: 90s
+max_idle_conns: 100
+
+backends:
+  - id: api-1
+    host: api-1.example.com
+    port: 8080
+    weight: 1
+    max_conns: 100
+
+  - id: api-2
+    host: api-2.example.com
+    port: 8080
+    weight: 1
+    max_conns: 100
+
+  - id: api-3
+    host: api-3.example.com
+    port: 8080
+    weight: 1
+    max_conns: 100
+
+# Health checking
+health_check:
+  enabled: true
+  interval: 10s
+  timeout: 5s
+  unhealthy_threshold: 3
+  healthy_threshold: 2
+  path: /health
+  method: GET
+  expected_status: 200
+
+# IP hash sticky sessions (no cookies)
+sticky_session:
+  enabled: true
+  method: ip_hash        # Route based on client IP
+  ttl: 24h               # Session duration

@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Backend servers
+  backend-1:
+    image: caddy:2.7-alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - ./test/caddyfile.1:/etc/caddy/Caddyfile
+    environment:
+      - SERVER_NAME=backend-1
+      - PORT=80
+
+  backend-2:
+    image: caddy:2.7-alpine
+    ports:
+      - "8082:80"
+    volumes:
+      - ./test/caddyfile.2:/etc/caddy/Caddyfile
+    environment:
+      - SERVER_NAME=backend-2
+      - PORT=80
+
+  backend-3:
+    image: caddy:2.7-alpine
+    ports:
+      - "8083:80"
+    volumes:
+      - ./test/caddyfile.3:/etc/caddy/Caddyfile
+    environment:
+      - SERVER_NAME=backend-3
+      - PORT=80
+
+  # Load Balancer
+  load-balancer:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    depends_on:
+      - backend-1
+      - backend-2
+      - backend-3
+    environment:
+      - LOG_LEVEL=info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
