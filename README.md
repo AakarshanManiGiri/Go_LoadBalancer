@@ -1,6 +1,6 @@
 # Go HTTP Load Balancer
 
-A production-grade, configurable HTTP load balancer built in Go without using Nginx. This load balancer features intelligent routing algorithms, comprehensive health checking, sticky sessions, and high availability support.
+A, configurable HTTP load balancer built in Go without using Nginx. This load balancer features intelligent routing algorithms, comprehensive health checking, sticky sessions, and high availability support.
 
 ## Features
 
