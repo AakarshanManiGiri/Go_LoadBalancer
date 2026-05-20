@@ -442,17 +442,6 @@ UNHEALTHY         ↓
              ────────────────→ HEALTHY
 ```
 
-## Future Enhancements
-
-- [ ] Metrics export (Prometheus, StatsD)
-- [ ] Advanced rate limiting and circuit breaking
-- [ ] WebSocket support
-- [ ] gRPC load balancing
-- [ ] TLS/SSL termination
-- [ ] Request rewriting/modification
-- [ ] Load-based auto-scaling
-- [ ] Admin control API for runtime configuration
-
 ## Contributing
 
 Contributions are welcome! Please follow these guidelines:
